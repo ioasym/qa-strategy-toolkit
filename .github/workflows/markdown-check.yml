@@ -1,0 +1,16 @@
+name: Markdown checks
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  markdown:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check for accidental merge markers
+        run: |
+          ! grep -R "<<<<<<<\|=======\|>>>>>>>" --include="*.md" .
+      - name: List documentation files
+        run: find . -name "*.md" -type f | sort

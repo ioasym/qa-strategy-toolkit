@@ -1,0 +1,5 @@
+ID,Area,Failure mode,Impact,Likelihood,Score,Test or mitigation,Owner,Status
+R-001,Checkout,Payment succeeds but order is not created,5,3,15,Integration and reconciliation tests,QE Lead,Open
+R-002,Orders,Retry creates duplicate order,5,3,15,Idempotency and concurrency checks,Order Team,Open
+R-003,Authentication,User can access another user's order,5,2,10,Authorization tests,Platform Team,Open
+R-004,Search,Sort order is incorrect,2,3,6,API and UI functional tests,Catalogue Team,Open
