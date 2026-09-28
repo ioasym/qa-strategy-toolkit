@@ -1,33 +1,33 @@
-# Purpose-based Root Cause Analysis
+# Root-Cause Analysis
 
-The point here is not blame but rather to reduce the risk of this problem happening again.
+The goal is not to assign blame. It is to reduce recurrence.
 
-## Framework Proposal
+## Suggested structure
 
-### Problem description
-What happened? Where did it happen? What people or systems were affected by this?
+### Problem statement
+What happened, where, and who/what was affected?
 
 ### Detection
-How did the problem come up, and why wasn’t it caught beforehand?
+How was the issue detected? Why was it not detected earlier?
 
-### Technical root cause
-Determine the specific situation that caused the problem to occur.
+### Technical cause
+What condition directly produced the failure?
 
-### Other factors contributing
+### Contributing factors
 Examples:
 
-- unclear requirement
-- lack of testing seam
-- incorrect retry policy
-- poor observability
+- ambiguous requirement
+- missing test seam
+- unsafe retry behaviour
+- weak observability
 - environment drift
-- lack of negative path testing
+- absent negative-path coverage
 
-### Immediate action taken
-How to resolve the current problem?
+### Corrective action
+Fix the immediate defect.
 
-### Prevention
-What can be done to reduce the likelihood of such problems recurring?
+### Preventive action
+Improve architecture, tests, monitoring, review, or process so similar failures are less likely.
 
-### Validation
-What evidence is needed to show this has been effective?
+### Verification
+Define evidence that demonstrates the preventive action works.

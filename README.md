@@ -1,39 +1,40 @@
 # QA Strategy Toolkit
 
-This repository showcases a pragmatic, ready-to-apply quality engineering playbook built around a fictional e-commerce platform called ShopSphere. The repository demonstrates how a senior QA / SDET / Quality Engineering Lead converts the product context and risks into a specific test strategy, automation plan, metrics, defect management, and release-readiness criteria.
+A practical Quality Engineering strategy and decision framework built around **ShopSphere**, a fictional distributed e-commerce platform. The repository demonstrates how business capabilities and requirements are translated into product risks, test levels, automation decisions, quality evidence, and release-readiness decisions.
 
-> This repository contains fictional materials used for educational purposes. It contains no confidential information of the employer, production credentials, or proprietary test assets.
+> This repository contains original example material for demonstration and learning. It does not contain employer-confidential information, production credentials, or proprietary test assets.
 
-## Scope and demonstrations
+## What this repository demonstrates
 
-- Risk-based testing and prioritization
-- Design of test strategy at all testing levels
-- Selection of automation candidates and cost-benefit analysis
-- Entry and exit criteria and evaluation of release readiness
-- Defect triage and root cause analysis
-- Metrics of quality used for decision making
-- Templates that can be easily reused in real projects
-- Communication templates for both engineering and business stakeholders
+- Risk-based testing and prioritisation
+- Test strategy design across test levels
+- Automation candidate selection and ROI thinking
+- Entry / exit criteria and release readiness
+- Defect triage and root-cause analysis
+- Quality metrics that support decisions
+- Practical templates that can be reused in real projects
+- Communication suitable for engineering and business stakeholders
 
-## Case study overview
+## Case study
 
 **ShopSphere** is a fictional distributed e-commerce platform organised around five business capabilities:
 
-- **CAP-01 - Authentication & Account Access**
-- **CAP-02 - Product Discovery**
-- **CAP-03 - Basket Management**
-- **CAP-04 - Checkout & Payment**
-- **CAP-05 - Order Fulfilment & Confirmation**
+- **CAP-01 — Authentication & Account Access**
+- **CAP-02 — Product Discovery**
+- **CAP-03 — Basket Management**
+- **CAP-04 — Checkout & Payment**
+- **CAP-05 — Order Fulfilment & Confirmation**
 
-The case study derives quality risks from these capabilities and uses customer purchase cycle to show how business risks should influence test levels, automation decisions, resiliency testing, observability, and release evidence.
+The case study derives testable requirements and quality risks from these capabilities, then traces them through test levels, automation choices, resilience testing, observability, and release evidence.
 
-## Repository structure
+## Repository map
 
 ```text
 qa-strategy-toolkit/
 ├── case-study/
 │   ├── system-overview.md
 │   ├── business-capabilities.md
+│   ├── requirements.md
 │   ├── architecture.md
 │   └── business-risks.md
 ├── strategy/
@@ -42,9 +43,11 @@ qa-strategy-toolkit/
 │   ├── test-environments.md
 │   └── entry-exit-criteria.md
 ├── risk/
+│   ├── risk-assessment-model.md
 │   ├── product-risk-analysis.md
 │   ├── risk-matrix.md
-│   └── risk-based-prioritisation.md
+│   ├── risk-based-prioritisation.md
+│   └── risk-to-test-traceability.md
 ├── automation/
 │   ├── automation-strategy.md
 │   ├── automation-candidate-selection.md
@@ -68,48 +71,50 @@ qa-strategy-toolkit/
 └── .github/workflows/markdown-check.yml
 ```
 
-## Proposed reading order
+## Suggested reading order
 
 1. `case-study/system-overview.md`
 2. `case-study/business-capabilities.md`
-3. `case-study/architecture.md`
-4. `case-study/business-risks.md`
-5. `risk/product-risk-analysis.md`
-6. `strategy/test-strategy.md`
-7. `automation/automation-strategy.md`
-8. `metrics/release-readiness.md`
+3. `case-study/requirements.md`
+4. `case-study/architecture.md`
+5. `case-study/business-risks.md`
+6. `risk/risk-assessment-model.md`
+7. `risk/product-risk-analysis.md`
+8. `risk/risk-to-test-traceability.md`
+9. `strategy/test-strategy.md`
+10. `automation/automation-strategy.md`
+11. `metrics/release-readiness.md`
 
-## Foundational principle
+## Core principle
 
-Testing effort should not be distributed equally. It should be driven by risk, change frequency, user impact, complexity and speed of feedback.
+Testing effort should not be distributed evenly. It should follow **risk, change frequency, user impact, technical complexity, and feedback speed**.
 
-A simple prioritization formula used in this case is:
+The baseline prioritisation model used in this repository is:
 
 ```text
 Risk score = Business impact × Failure likelihood
 ```
 
-The score is an aid for decision-making and does not replace engineering judgement.
-Regulatory requirements, security implications, architecture changes, production issues and the specifics of the stakeholder context can trump the numerical assessment.
+Impact and likelihood use explicit 1–5 definitions in `risk/risk-assessment-model.md`. The score is a decision aid, not a release decision. Security obligations, change scope, architecture changes, incidents, control gaps, and evidence quality can justify stronger treatment without manipulating the numeric score.
 
-## How to personalize this repository
+## How to make this repository your own
 
-- Replace ShopSphere with an alternative fictional domain (e.g., travel, sandbox banking, logistics, or streaming).
-- Add diagrams based on your own architectural assumptions.
-- Add a small automated test repository and create cross-links in the automation strategy.
-- Add anonymized examples only if you own the material and have permission to publish.
-- Add concise decision rationales explaining selection of particular test levels and metrics.
+- Replace ShopSphere with another fictional domain such as travel, banking sandbox, logistics, or streaming.
+- Add diagrams created from your own architecture assumptions.
+- Add a small automated test repository and cross-link it from the automation strategy.
+- Add anonymised examples only when you own the material and have permission to publish it.
+- Add short decision records that explain *why* you selected particular test levels and metrics.
 
-## Portfolio talking points
+## Engineering discussion points
 
-During interviews use this repository to show:
+The case study is designed to make the following decisions explicit:
 
-- How the product risks are identified before test cases are selected
-- Why certain checks are performed at API or component level and not the UI
-- What criteria drive decisions about what to automate
-- What indicators are taken into account before recommending a release
-- Approaches to handling flaky automation and escaped defects
-- How the information about quality should impact engineering decisions
+- How you identify product risk before choosing test cases
+- Why some checks belong at API or component level instead of UI
+- How you decide what to automate
+- What signals you use before recommending a release
+- How you handle flaky automation and escaped defects
+- How quality information should influence engineering decisions
 
 ## License
 

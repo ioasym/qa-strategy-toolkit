@@ -1,22 +1,22 @@
-# Test Pyramid / Layered Test Strategy
+# Test Pyramid / Test Portfolio
 
-An effective test portfolio consists of more frequent low-cost test runs and fewer high-cost, across-the-system test runs.
+A useful portfolio has many fast checks and fewer expensive cross-system checks.
 
 ```text
              UI E2E
            /        \
-          Integration
-        /              \
+        Integration
+      /              \
           API/Service
-      /                  \
-         Unit/Component
+    /                  \
+        Unit/Component
 ```
 
-The described shape should be taken as a recommendation rather than an absolute guideline, because the true proportions depend on the architecture and the corresponding risks involved.
+The shape is guidance rather than a quota. Architecture and risk determine the actual distribution.
 
 ## Anti-patterns
 
-- Using the UI to cover all possible combinations of API calls
-- Using end-to-end tests to debug business logic details
-- Implementing automation tests using a single mutable account
-- Keeping failing tests in the blocking pipeline forever
+- Repeating all API permutations through the UI
+- Using E2E tests to diagnose low-level business logic
+- Building automation that depends on one shared mutable account
+- Keeping unreliable tests in the blocking pipeline indefinitely

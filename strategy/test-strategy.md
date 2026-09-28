@@ -50,44 +50,46 @@ The strategy prioritises:
 
 ## 5. Risk-based prioritisation
 
-Risk is estimated using:
+ShopSphere uses the explicit scoring definitions in [`../risk/risk-assessment-model.md`](../risk/risk-assessment-model.md):
 
 ```text
 Risk score = Business impact × Failure likelihood
 ```
 
-Scores are reviewed alongside:
+The applied scores and rationale are recorded in [`../risk/product-risk-analysis.md`](../risk/product-risk-analysis.md). Scores are reviewed alongside:
 
-- recent code changes
-- incident history
-- architectural complexity
-- dependency changes
-- observability gaps
-- regulatory/security obligations
+- release/change scope
+- recent architecture or dependency changes
+- incident/defect history when available
+- observability and recovery gaps
+- security, contractual, or regulatory obligations
+- evidence freshness and environment relevance
 
-### Suggested bands
+### Risk bands
 
-| Score | Band | Expected treatment |
+| Score | Band | Default treatment |
 |---:|---|---|
-| 16–25 | Critical | Multi-layer coverage, negative paths, release-blocking evidence |
-| 10–15 | High | Strong automated coverage + exploratory focus |
-| 5–9 | Medium | Targeted automated/manual coverage |
-| 1–4 | Low | Selective testing based on change |
+| 16–25 | Critical | Multi-layer evidence, resilience/negative coverage, explicit release-risk disposition |
+| 10–15 | High | Strong automated evidence at the lowest useful layer; release relevance reviewed explicitly |
+| 5–9 | Medium | Targeted automated/manual/exploratory evidence based on change scope |
+| 1–4 | Low | Selective verification based on change and customer relevance |
+
+**Risk band is not the same as a release gate.** A Medium risk directly changed by the release can require fresh blocking evidence, while a High risk outside the change scope may rely on stable regression evidence. Release-critical decisions are tracked separately in `risk-to-test-traceability.md`.
 
 ## 6. Critical regression pack
 
-The release-critical automated pack covers:
+The release-critical automated pack is derived from the requirement/risk traceability model rather than from UI pages alone. It includes evidence for:
 
-- valid/invalid login
-- product search
-- add to basket
-- price/basket recalculation
-- successful checkout
-- declined payment
-- retry-safe order creation
-- order persisted and visible in order history
+- valid/invalid authentication and session control (`REQ-001`–`REQ-004`, `RISK-001`/`RISK-002`)
+- basket state and total correctness (`REQ-008`–`REQ-010`, `RISK-006`/`RISK-007`)
+- successful checkout producing one durable order (`REQ-012`, `REQ-016`, `RISK-008`/`RISK-012`)
+- declined payment producing the correct negative outcome (`REQ-013`, `RISK-011`)
+- retry after an uncertain result remaining idempotent (`REQ-014`, `RISK-009`)
+- order retrieval by the correct customer (`REQ-017`, `RISK-013`)
 
-The pack should be small enough to remain reliable and fast enough to execute on every deployment candidate.
+Product search remains strongly automated, but whether it is a release-blocking gate depends on the release/change scope. Performance and asynchronous-processing evidence are similarly conditional where the relevant components or capacity assumptions have changed.
+
+The blocking pack should remain small enough to be reliable and fast, while deeper component/API/integration suites provide broader evidence below the browser layer. See `../risk/risk-to-test-traceability.md`.
 
 ## 7. Test data
 

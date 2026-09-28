@@ -2,16 +2,16 @@
 
 ## Objectives
 
-Automation is designed to provide quick and repeatable proof, rather than to produce large number of automated scripts.
+Automation exists to provide **fast, repeatable evidence**, not to maximise the number of automated scripts.
 
 ## Principles
 
-- Analyze behavior on the lowest level of its usefulness.
-- Provide deliberately limited end-to-end (E2E) coverage.
-- Prefer APIs for tests setup and teardown.
+- Test behaviour at the lowest useful level.
+- Keep E2E coverage intentionally small.
+- Prefer APIs for test setup and cleanup.
 - Make failures diagnosable.
 - Run high-signal checks frequently.
-- Document flaky tests as quality debt.
+- Track flaky tests as quality debt.
 - Remove or refactor low-value tests.
 
 ## Pipeline model
@@ -27,34 +27,34 @@ Commit
   -> pre-prod release pack
 ```
 
-## Quality criteria for automated tests
+## Automation quality criteria
 
-Candidate for automation should have:
+A candidate automated test should have:
 
 - stable preconditions
-- clear and understandable expected result
+- clear expected outcome
 - repeatable data
-- proper testing environment
-- maintainable owner
-- failure signal for taking action
+- suitable execution environment
+- maintainable ownership
+- a failure signal someone will act on
 
-## Artifacts to gather for failures
+## Failure artifacts
 
-In case of UI automation collect where needed:
+For UI automation capture where useful:
 
 - trace
 - screenshot
-- video (optional)
-- diagnostics from console/communication
-- input id for the test
-- environment/build info
+- video (selectively)
+- console/network diagnostics
+- test input identifier
+- environment/build metadata
 
-## Policy for flaky tests
+## Flaky test policy
 
-1. Determine the problem is with the product itself or with the test.
-2. Quarantine only when it is required to keep the pipeline integrity.
-3. Report defect/work item.
-4. Fix problem quickly.
-5. Unquarantine after several successes.
+1. Confirm whether the product or test is faulty.
+2. Quarantine only when necessary to preserve pipeline trust.
+3. Create a visible defect/work item.
+4. Fix promptly.
+5. Remove quarantine after repeated stable runs.
 
-Do not use retries to hide failures.
+Retry should not be used to hide unknown failures.
