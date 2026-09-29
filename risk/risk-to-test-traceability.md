@@ -1,6 +1,6 @@
 # Risk-to-Test Traceability
 
-This traceability matrix makes a connection between the ShopSphere business model and the actual quality evidence.
+This matrix connects the ShopSphere business model to concrete quality evidence.
 
 ```text
 Business capability

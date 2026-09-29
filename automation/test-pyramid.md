@@ -1,6 +1,6 @@
-# Test Pyramid / Test Portfolio
+# Test Pyramid / Layered Test Strategy
 
-A useful portfolio has many fast checks and fewer expensive cross-system checks.
+A layered test strategy uses many fast checks and fewer expensive cross-system checks.
 
 ```text
              UI E2E

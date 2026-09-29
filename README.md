@@ -1,14 +1,15 @@
 # QA Strategy Toolkit
 
-A practical Quality Engineering strategy and decision framework built around **ShopSphere**, a fictional distributed e-commerce platform. The repository demonstrates how business capabilities and requirements are translated into product risks, test levels, automation decisions, quality evidence, and release-readiness decisions.
+A practical Quality Engineering strategy and decision framework built around **ShopSphere**, a fictional distributed e-commerce platform. The model maps business capabilities and requirements to product risks, test levels, automation decisions, quality evidence, and release-readiness decisions.
 
-> This repository contains original example material for demonstration and learning. It does not contain employer-confidential information, production credentials, or proprietary test assets.
+> **Scope note:** ShopSphere and all related examples are synthetic. The repository contains no employer/client code, production credentials, production data, or proprietary test assets.
 
-## What this repository demonstrates
+## Coverage
 
 - Risk-based testing and prioritisation
 - Test strategy design across test levels
 - Automation candidate selection and ROI thinking
+- Quality Engineering decision records and trade-off documentation
 - Entry / exit criteria and release readiness
 - Defect triage and root-cause analysis
 - Quality metrics that support decisions
@@ -52,6 +53,12 @@ qa-strategy-toolkit/
 │   ├── automation-strategy.md
 │   ├── automation-candidate-selection.md
 │   └── test-pyramid.md
+├── decisions/
+│   ├── README.md
+│   ├── ADR-001-ui-automation-scope.md
+│   ├── ADR-002-api-first-test-data.md
+│   ├── ADR-003-flaky-test-policy.md
+│   └── ADR-004-release-quality-gates.md
 ├── defects/
 │   ├── defect-triage-process.md
 │   ├── severity-vs-priority.md
@@ -83,7 +90,10 @@ qa-strategy-toolkit/
 8. `risk/risk-to-test-traceability.md`
 9. `strategy/test-strategy.md`
 10. `automation/automation-strategy.md`
-11. `metrics/release-readiness.md`
+11. `decisions/README.md`
+12. `decisions/ADR-001-ui-automation-scope.md`
+13. `decisions/ADR-004-release-quality-gates.md`
+14. `metrics/release-readiness.md`
 
 ## Core principle
 
@@ -97,24 +107,16 @@ Risk score = Business impact × Failure likelihood
 
 Impact and likelihood use explicit 1–5 definitions in `risk/risk-assessment-model.md`. The score is a decision aid, not a release decision. Security obligations, change scope, architecture changes, incidents, control gaps, and evidence quality can justify stronger treatment without manipulating the numeric score.
 
-## How to make this repository your own
+## Design considerations
 
-- Replace ShopSphere with another fictional domain such as travel, banking sandbox, logistics, or streaming.
-- Add diagrams created from your own architecture assumptions.
-- Add a small automated test repository and cross-link it from the automation strategy.
-- Add anonymised examples only when you own the material and have permission to publish it.
-- Add short decision records that explain *why* you selected particular test levels and metrics.
+The strategy makes these trade-offs explicit:
 
-## Engineering discussion points
-
-The case study is designed to make the following decisions explicit:
-
-- How you identify product risk before choosing test cases
-- Why some checks belong at API or component level instead of UI
-- How you decide what to automate
-- What signals you use before recommending a release
-- How you handle flaky automation and escaped defects
-- How quality information should influence engineering decisions
+- Product risk is identified before selecting test cases.
+- Component/API checks are preferred when browser execution adds no useful confidence.
+- Automation candidates are selected on repeatability, risk coverage, maintenance cost, and feedback value.
+- Release recommendations are based on evidence and residual risk rather than test-count or pass-rate targets.
+- Flaky automation is treated as quality-system debt because it weakens confidence in release evidence.
+- Technical test decisions are recorded when the trade-off should remain reviewable over time.
 
 ## License
 

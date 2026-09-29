@@ -1,66 +1,66 @@
 # Risk Assessment Model
 
-This document explains the scoring system used in the ShopSphere case study. There are three decisions which are often confused:
+This document defines the scoring model used throughout the ShopSphere case study. It separates three related decisions that are easy to confuse:
 
-1. **How bad could the failure be?** - Impact
-2. **How probable is the failure assuming the stated assumptions?** - Likelihood
-3. **What is the appropriate treatment and release evidence are appropriate?** - Risk treatment
+1. **How serious could the failure be?** — Impact
+2. **How plausible is the failure under the stated assumptions?** — Likelihood
+3. **What quality treatment and release evidence are appropriate?** — Risk treatment
 
-The model has been kept simple for explanation and criticism purposes. It supports engineering judgement rather than replaces it.
+The model is intentionally simple enough to explain and review. It supports engineering judgment; it does not replace it.
 
-## 1. Base formula
+## 1. Baseline formula
 
-Each product risk has a base score:
+Each product risk receives an initial score:
 
 ```text
 Risk score = Impact × Likelihood
 ```
 
-Both elements are scored from 1 to 5, so the result is in the range 1 to 25.
+Both values use a 1–5 scale. The result ranges from 1 to 25.
 
-The score reflects the **baseline product risk before considering the effectiveness of the chosen test and operational controls**. It is not a probabilistic measurement and must not be used as such.
+The score represents **baseline product risk before considering the strength of the selected test/operational controls**. It is not a probability calculation and should not be presented as actuarial precision.
 
 ## 2. Impact scale
 
-Impact defines a credible consequence in case of the failure reaching a customer or production flow.
+Impact describes the credible consequence if the failure reaches a customer or production workflow.
 
-| Rating | Label | Definition | ShopSphere-style descriptors |
+| Rating | Label | Definition | ShopSphere-style example |
 |---:|---|---|---|
-| **1** | Negligible | Cosmetic or very limited inconveniences; no transaction, security, availability or data integrity impact. | Minor presentation problem that does not affect customer purchasing. |
-| **2** | Minor | Limited  functionality impairment with a practical workaround; small impact on customer support or customer satisfaction. | Delayed confirmation, but the order can still be retrieved. |
-| **3** | Moderate | Significant functionality impairment or partial journey; may require customer support intervention. | Search results are incomplete or wrong for typical criteria. |
-| **4** | Major | Essential journey or important data becomes unavailable or inconsistent for the impacted customers; significant conversion, operations or customer satisfaction impact. | Customer basket becomes lost prior to checkout or the order becomes invisible after it has been created. |
-| **5** | Severe | Financial inconsistency, data leakage, double charging/double order creation or inability to perform an essential revenue-generating transaction. | Payment was successful, but no persistent order is created; customer is able to access other customer's orders. |
+| **1** | Negligible | Cosmetic or very limited inconvenience; no material transaction, security, availability, or data-integrity effect | Minor presentation defect with no effect on purchase behaviour |
+| **2** | Minor | Limited feature degradation with a practical workaround; small support/customer-trust effect | Delayed confirmation while the valid order remains retrievable |
+| **3** | Moderate | Material feature degradation or incomplete behaviour affecting a meaningful subset of users; may require support intervention | Search results are incomplete or incorrect for some common criteria |
+| **4** | Major | Core journey or important data is unavailable/inconsistent for affected users; material conversion, operational, or customer-trust impact | Basket state is lost before checkout or a created order is temporarily not visible |
+| **5** | Severe | Financial inconsistency, unauthorised data exposure, duplicate charging/order creation, or broad inability to complete a revenue-critical transaction | Payment succeeds but no durable order is created; customer accesses another customer's protected order data |
 
 ### Impact scoring rule
 
-The score should consider a **credible business consequence**, rather than a technical complexity of the change. For example, a one-line authorization bug may cause Impact 5, but even a major refactoring can have minor impact if its failure modes are well-contained.
+Score the **credible business consequence**, not the technical size of the code change. A one-line authorization bug can have Impact 5; a large internal refactor can have low impact if its failure modes are well contained.
 
 ## 3. Likelihood scale
 
-Likelihood defines the probability of the failure under the current design, traffic assumptions, dependency behaviour, change profile and preventive controls.
+Likelihood describes how plausible the failure is under the current design, traffic assumptions, dependency behaviour, change profile, and preventive controls.
 
-Given the fictional nature, ShopSphere rating should be considered a **scenario-based estimate**, rather than a conclusion from real-life production incidents statistics.
+Because ShopSphere is fictional, these ratings are **scenario-based estimates**, not claims based on real production incident statistics.
 
 | Rating | Label | Definition | Typical evidence/assumption |
 |---:|---|---|---|
-| **1** | Rare | Requires an exceptional set of circumstances and is heavily constrained by the design | Edge path with mature preventive controls and limited concurrency/dependency exposure |
-| **2** | Unlikely | Possible, but requires a less common circumstance or a particular fault | Cross-account access bug, double event delivery or stale read under particular circumstances |
-| **3** | Possible | Normal operations can uncover the failure and the path shows significant state/dependency complexity | Timeouts, retries, peak traffic, sessions transition, cross-service consistency |
-| **4** | Likely |  Common triggering circumstances or highly dynamic/weakly controlled domain | Frequent changes in the integration contract with limited preventive checks |
-| **5** | Very likely | The failure is expected to repeat without immediate corrective action | Known unstable behaviour or frequently reproducible defect pattern |
+| **1** | Rare | Requires an exceptional combination of conditions and is strongly constrained by the design | Narrow edge path with mature preventive controls and little concurrency/dependency exposure |
+| **2** | Unlikely | Plausible but requires a less common condition or a specific fault | Cross-account access bug, duplicate event delivery, or stale read under limited conditions |
+| **3** | Possible | Normal operating conditions can expose the failure and the path has meaningful state/dependency complexity | Timeouts, retries, peak load, session transitions, cross-service consistency |
+| **4** | Likely | Triggering conditions are frequent or the area is highly change-prone/weakly controlled | Repeatedly changing integration contract with limited preventive checks |
+| **5** | Very likely | Failure is expected to recur without immediate mitigation | Known unstable behaviour or a consistently reproducible defect pattern |
 
 ### Likelihood inputs
 
-If real operational data is available, it should be used. Otherwise, the following considerations should be taken into account:
+When real operational data exists, use it. Otherwise consider:
 
-- Frequency of the triggering user/system circumstance
-- Quantity and reliability of external/internal dependencies
-- Concurrency and retry behavior
-- State transitions complexity
-- Change frequency in the affected area
-- Maturity of preventive controls
-- Incident/defect history, if available
+- frequency of the triggering user/system condition
+- number and reliability of external/internal dependencies
+- concurrency and retry behaviour
+- complexity of state transitions
+- frequency of change in the affected area
+- maturity of preventive controls
+- incident/defect history, when available
 
 Do not raise likelihood merely because a failure would be severe; impact and likelihood are deliberately separate dimensions.
 
@@ -68,85 +68,83 @@ Do not raise likelihood merely because a failure would be severe; impact and lik
 
 | Score | Band | Default interpretation |
 |---:|---|---|
-| **16–25** | Critical | Expect the immediate risk treatment and good release evidence |
-| **10–15** | High | Expect robust evidence; relevance of release should be checked explicitly |
-| **5–9** | Medium | The evidence should be targeted according to the change scope and failure modes |
-| **1–4** | Low | Generally enough to base the release evidence on a selective, change-specific approach |
+| **16–25** | Critical | Immediate, explicit risk treatment and strong release evidence expected |
+| **10–15** | High | Strong automated/multi-layer evidence expected; release relevance reviewed explicitly |
+| **5–9** | Medium | Targeted evidence based on change scope and failure mode |
+| **1–4** | Low | Selective/change-focused evidence is normally sufficient |
 
-The bands are used for prioritization and do not determine release decisions themselves. 
+The bands are prioritisation aids. They are not release decisions by themselves.
 
-## 5. Default risk treatment by band
+## 5. Default treatment by band
 
 | Band | Test/evidence expectation | Release treatment |
 |---|---|---|
-| **Critical** | Multi-layer automated checks if possible; negative/resilience coverage; exploratory focus; observability/recovery evidence | Generally blocking the release until evidence is satisfactory or the residual risk is explicitly accepted by an accountable person |
-| **High** | Robust coverage at the lowest layer possible; end-to-end/integration testing only if the boundary or customer journey requires it | Evaluate explicitly whether the risk is release-critical for the current change; unresolved failures need documented disposition |
-| **Medium** | Appropriate targeting of automation and/or exploratory testing appropriate for the change | Usually depends on change scope; may become release-critical if the area modified by the change is directly exposed to the risk |
-| **Low** | Selective evidence; avoid unnecessary expensive regression to satisfy scoring metric | Generally notblocking, but can be blocking if there is an explicit commitment or release goal related to it |
+| **Critical** | Multi-layer automated checks where feasible; negative/resilience coverage; exploratory focus; observability/recovery evidence | Normally release-blocking until evidence is satisfactory or residual risk is explicitly accepted by an accountable stakeholder |
+| **High** | Strong coverage at the lowest useful layer; integration/E2E only where the boundary or customer journey requires it | Explicitly assess whether the risk is release-critical for the current change; unresolved failures require documented disposition |
+| **Medium** | Targeted automation and/or exploratory testing appropriate to the change | Usually conditional on change scope; may become release-critical when the changed area directly exposes the risk |
+| **Low** | Selective verification; avoid expensive regression merely to satisfy a score | Normally non-blocking unless a specific commitment or release objective makes it relevant |
 
-## 6. Score is not equal to release criticality
+## 6. Score is not the same as release criticality
 
-Risk may be rated High without becoming a release-blocking gate for each release. On the contrary, Medium risk can become release-critical if the release modifies the affected component or customer commitment.
+A risk can be High without being a blocking gate for every release. Conversely, a Medium risk can be release-critical when a release directly changes the affected component or customer commitment.
 
-Thus, release criticality includes:
+Release criticality therefore considers:
 
-- the baseline risk score or band
-- change of the affected capability by the release
-- critical procurement or security path of the risk
-- evidence freshness and relevance to the relevant environment
-- unresolved defects or known control weaknesses
+- baseline risk score/band
+- whether the release changes the affected capability
+- whether the risk is on the critical purchase/security path
+- evidence freshness and environment relevance
+- unresolved defects or known control gaps
 - explicit contractual, security, regulatory, or business commitments
 
-This explains why  **Release critical?** is recorded separately from the risk band in `risk-to-test-traceability.md`.
+This is why `risk-to-test-traceability.md` records **Release critical?** separately from the risk band.
 
 ## 7. Overrides and escalation
 
-The numeric model may be overridden if it understates or overstated the decision context.
+The numerical model may be overridden when it would understate or overstate the decision context.
 
-Examples of the situation when it might happen are:
+Examples include:
 
 - security or privacy obligations
-- contractual service level agreement
-- recent production incident
-- unproven architectural change
-- degraded dependency
-- strong compensating control that materially reduces exposure
+- contractual service thresholds
+- a recent production incident
+- an unproven architecture change
+- a temporarily degraded dependency
+- a strong compensating control that materially reduces exposure
 
 Any override should record:
 
-- original score or band
-- new treatment (not necessarily a new numeric score)
+- original score/band
+- adjusted treatment (not necessarily a new fabricated number)
 - rationale
 - accountable owner
-- review or expiry condition
+- review/expiry condition
 
-Prefer **treatment overrides** over manipulation of the score just to get a particular band.
+Prefer **treatment overrides** over manipulating the score solely to obtain a desired band.
 
 ## 8. Residual risk
 
-After applying controls and gathering evidence, the residual risk can still be present. This repository does not compute the second pseudo-precise residual score.
+After controls are implemented and evidence is collected, the team may still have residual risk. This repository does not calculate a second pseudo-precise residual score. Instead, the release record states:
 
-The release record should contain:
-
-- remaining baseline risks
-- evidence that passed orfailed
+- which baseline risks remain relevant
+- what evidence passed/failed
 - known defects or gaps
-- available mitigation or workaround
-- people who took over the remaining business risk
+- available mitigation/workaround
+- who accepted any remaining business risk
 
-This makes the reasoning about releases auditable without implying test suite mathematically removes all uncertainty.
+This keeps release reasoning auditable without pretending the test suite mathematically eliminates uncertainty.
 
-## 9. Re-assessment triggers
+## 9. Review triggers
 
-Risk should be re-assessed when any of the following factors changes significantly:
+Reassess a risk when any of the following changes materially:
 
 - architecture or service boundaries
-- behavior of external providers
-- traffic or capacity assumptions
+- external provider behaviour
+- traffic/capacity assumptions
 - incident or defect history
-- security or authorization model
-- criticality of the capability for business 
-- maturity of preventive controls
-- change frequency in the affected domain
+- security/authorization model
+- business criticality of the capability
+- preventive control maturity
+- frequency of change in the affected area
 
-Applied ShopSphere assessment is described in the file [`product-risk-analysis.md`](product-risk-analysis.md).
+The applied ShopSphere assessment is documented in [`product-risk-analysis.md`](product-risk-analysis.md).

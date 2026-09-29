@@ -18,3 +18,7 @@
 - Relevant performance/security checks meet agreed thresholds.
 - Known limitations and residual risks are documented.
 - Test evidence is attached to the release record.
+
+## Release-gate decision model
+
+The criteria above are interpreted through the risk- and change-aware gate model in [`../decisions/ADR-004-release-quality-gates.md`](../decisions/ADR-004-release-quality-gates.md). A global pass percentage does not override the relevance of a failed high-impact control, and an exception to a blocking gate requires explicit, visible risk disposition.

@@ -7,8 +7,8 @@ Automation exists to provide **fast, repeatable evidence**, not to maximise the 
 ## Principles
 
 - Test behaviour at the lowest useful level.
-- Keep E2E coverage intentionally small.
-- Prefer APIs for test setup and cleanup.
+- Keep E2E coverage focused on critical cross-system journeys; see [`../decisions/ADR-001-ui-automation-scope.md`](../decisions/ADR-001-ui-automation-scope.md).
+- Prefer APIs for test setup and cleanup; see [`../decisions/ADR-002-api-first-test-data.md`](../decisions/ADR-002-api-first-test-data.md).
 - Make failures diagnosable.
 - Run high-signal checks frequently.
 - Track flaky tests as quality debt.
@@ -57,4 +57,4 @@ For UI automation capture where useful:
 4. Fix promptly.
 5. Remove quarantine after repeated stable runs.
 
-Retry should not be used to hide unknown failures.
+Retry should not be used to hide unknown failures. The full policy is recorded in [`../decisions/ADR-003-flaky-test-policy.md`](../decisions/ADR-003-flaky-test-policy.md).

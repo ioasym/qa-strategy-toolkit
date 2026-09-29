@@ -2,9 +2,9 @@
 
 ## Product purpose
 
-ShopSphere is a fictional distributed e-commerce platform used to demonstrate a complete quality-engineering strategy. Customers can sign in, discover products, manage a basket, complete checkout, and receive a durable order confirmation.
+ShopSphere is a fictional distributed e-commerce platform covering sign-in, product discovery, basket management, checkout, payment, and durable order confirmation.
 
-The case study is intentionally realistic enough to create meaningful testing trade-offs while remaining independent of any real employer, client, or production system.
+The model includes enough distributed-system behaviour to create meaningful testing trade-offs while remaining independent of any real employer, client, or production system.
 
 ## Business model in scope
 

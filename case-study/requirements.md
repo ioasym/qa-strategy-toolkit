@@ -1,116 +1,116 @@
-# ShopSphere - Requirements Catalogue
+# ShopSphere — Requirements Catalogue
 
-The current document formalizes the five ShopSphere business capabilities into the concise catalogue of testable requirements. In contrast to detailed user interface specification, each requirement intentionally is written at business/system level in order to provide some stability against ever changing implementation details.
+This catalogue translates the five ShopSphere business capabilities into a small set of testable requirements. The requirements are intentionally written at business/system level rather than as detailed UI specifications so that they remain stable when implementation details change.
 
-Each requirement has a unique identifier (`REQ-xxx`) and is associated with one or more risks in `../risk/risk-to-test-traceability.md`.
+Each requirement has a unique identifier (`REQ-xxx`) and is linked to one or more risks in `../risk/risk-to-test-traceability.md`.
 
 ## Requirement-writing principles
 
-Catalog follows four principles for each requirement:
+The catalogue uses four rules:
 
-1. Describes a visible business/system outcome.
-2. Does not mention any particular test level or automation framework.
-3. Has enough specificity to collect evidence and assess risks.
-4. Does not contain any implementation details that could not be considered known at the time of requirement formulation.
+1. A requirement should describe an observable business or system outcome.
+2. It should avoid prescribing a test level or automation tool.
+3. It should be specific enough to support evidence and risk analysis.
+4. Unknown implementation detail should remain an assumption or design decision rather than being silently added to the requirement.
 
 ---
 
-## CAP-01 — Authentication and Account Access
+## CAP-01 — Authentication & Account Access
 
-| Requirement ID | Requirement | Evidence of Satisfaction |
+| Requirement ID | Requirement | Evidence of satisfaction |
 |---|---|---|
-| **REQ-001** | A registered customer with valid credentials can create an authenticated session. | Authenticated session has been created. |
-| **REQ-002** | Incorrect credentials cannot create an authenticated session. | Creation of authenticated session was rejected. |
-| **REQ-003** | An authenticated customer can access only authorized own account/order resources. | Any request for non-authorized resources of the other customer has been denied. |
-| **REQ-004** |  Session expiration or sign out destroys all accesses which have been obtained using the previous authenticated session. | Any request for protected actions either fails or requires authentication after the session expiration/sign out. |
+| **REQ-001** | A registered customer with valid credentials can establish an authenticated session. | Authentication succeeds and the customer can access authenticated account functions. |
+| **REQ-002** | Invalid credentials must not establish an authenticated session. | Authentication is rejected without creating an authenticated session. |
+| **REQ-003** | An authenticated customer must be able to access only account and order data they are authorised to view. | Requests for another customer's protected resources are denied. |
+| **REQ-004** | Session expiry or sign-out must remove access that depends on the previous authenticated session. | Protected actions fail or require re-authentication after expiry/sign-out. |
 
-### Primary Risk Associations
+### Primary risk links
 
-- `RISK-001` - unauthorized access to another customer's data
-- `RISK-002` - a legitimate customer cannot create or maintain authenticated session
+- `RISK-001` — unauthorised access to another customer's data
+- `RISK-002` — legitimate customer cannot establish or maintain a valid session
 
 ---
 
 ## CAP-02 — Product Discovery
 
-| Requirement ID | Requirement | Evidence of Satisfaction |
+| Requirement ID | Requirement | Evidence of satisfaction |
 |---|---|---|
-| **REQ-005** | A customer can search/browse the catalogue and receive products matching the selected criteria. | Correct search/filter/sort responses are received for representative and boundary cases. |
-| **REQ-006** | Price and availability information which is shown for purchasing purposes should match the catalogue state which is acceptable for further basket/checkout processing. | There is no silent disagreement between catalogue, basket and checkout on the accepted commercial state. |
-| **REQ-007** | Product discovery should continue to perform within the agreed service threshold under representative expected load. | Latency/error rate measured values are within the agreed service threshold for the given load. |
+| **REQ-005** | Customers can search or browse the catalogue and receive products that match the requested criteria. | Search/filter/sort responses are correct for representative and boundary conditions. |
+| **REQ-006** | Product price and availability presented for purchase must reflect the catalogue state accepted by downstream basket/checkout processing. | Catalogue, basket, and checkout do not silently disagree on the accepted commercial state. |
+| **REQ-007** | Product discovery must remain responsive within the agreed service threshold under representative expected demand. | Measured latency and error rate remain within the defined threshold for the tested load profile. |
 
-### Primary Risk Associations
+### Primary risk links
 
-- `RISK-003` - incorrect/stale price/availability
-- `RISK-004` - incorrect / incomplete search/filter/sort results
-- `RISK-005` - slow search latency under expected peak load
+- `RISK-003` — stale or incorrect price/availability
+- `RISK-004` — incorrect or incomplete search/filter/sort results
+- `RISK-005` — degraded search latency under expected peak demand
 
 ---
 
 ## CAP-03 — Basket Management
 
-| Requirement ID | Requirement | Evidence of Satisfaction |
+| Requirement ID | Requirement | Evidence of satisfaction |
 |---|---|---|
-| **REQ-008** | A customer can add, update or remove valid basket items/quantities. |  Basket is updated in accordance with the request. Invalid basket state transitions are rejected. |
-| **REQ-009** | Basket totals should be calculated from the accepted items/quantities/prices/commercial rules. | Calculations performed on component/API level match expected totals. |
-| **REQ-010** | Basket state should be consistent throughout the normal navigation until checkout consumes or invalidates it. | Basket can be reread without unexpected losses, duplications or corruptions. |
+| **REQ-008** | Customers can add, update, and remove valid basket items and quantities. | Basket state changes match the requested operation and invalid state transitions are rejected. |
+| **REQ-009** | Basket totals must be calculated from the accepted items, quantities, prices, and applicable commercial rules. | Component/API calculations match expected totals across representative and boundary cases. |
+| **REQ-010** | Basket state must remain consistent through normal navigation and until checkout consumes or invalidates it. | The basket can be re-read without unexpected loss, duplication, or corruption. |
 
-### Primary Risk Associations
+### Primary risk links
 
-- `RISK-006` - incorrect basket total
-- `RISK-007` - lost / corrupted basket state before checkout
+- `RISK-006` — incorrect basket total
+- `RISK-007` — lost or corrupted basket state before checkout
 
 ---
 
-## CAP-04 — Checkout and Payment
+## CAP-04 — Checkout & Payment
 
-| Requirement ID | Requirement | Evidence of Satisfaction |
+| Requirement ID | Requirement | Evidence of satisfaction |
 |---|---|---|
-| **REQ-011** | Checkout should validate that the provided basket/purchase data are in an acceptable state before trying to process payment. | Invalid checkout requests are rejected before producing an invalid order/payment state. |
-| **REQ-012** | An accepted payment results in one durable ShopSphere order referencing the accepted payment outcome. | Order and payment states can be reconciled for the same transaction. |
-| **REQ-013** | A refused payment should not be accepted as a successful purchase and does not produce a completed order. | Decline response, customer visible state and order state are in agreement. |
-| **REQ-014** | Repeating a checkout request after an unclear payment result does not produce a duplicated charge or completed purchase. | Repeated requests for the same transaction are idempotent on the payment and order level. |
-| **REQ-015** | Checkout should be available and responsive within the agreed service thresholds under the given peak load profile. | Checkouts latency/throughput/error rate stays within the agreed thresholds for the given profile. |
+| **REQ-011** | Checkout must validate that the submitted basket and required purchase data are in an acceptable state before attempting payment. | Invalid checkout requests are rejected before an invalid order/payment state is produced. |
+| **REQ-012** | An approved payment must result in one durable ShopSphere order that references the accepted payment outcome. | Payment and order state can be correlated and reconciled for the same transaction. |
+| **REQ-013** | A declined payment must not be represented as a successful purchase and must not produce a completed order. | Decline response, customer-visible outcome, and stored order state are consistent. |
+| **REQ-014** | Retrying a checkout after an uncertain payment result must not create a duplicate charge or duplicate completed purchase. | Repeated requests with the same logical transaction remain idempotent across payment and order boundaries. |
+| **REQ-015** | Checkout must remain available and responsive within agreed service thresholds under the defined peak-load profile. | Checkout latency, throughput, and error rate remain within the agreed thresholds for the tested profile. |
 
-### Primary Risk Associations
+### Primary risk links
 
-- `RISK-008` - payment succeeded but did not produce a durable order
-- `RISK-009` - repeated actions produced a duplicated charge
-- `RISK-010` - checkout is not available or too slow under peak load
-- `RISK-011` - a declined/failing payments are incorrectly reported
+- `RISK-008` — payment succeeds but no durable order is created
+- `RISK-009` — retry creates a duplicate charge
+- `RISK-010` — checkout unavailable or too slow under peak demand
+- `RISK-011` — declined/failed payment reported incorrectly
 
 ---
 
-## CAP-05 — Order Fulfillment and Confirmation
+## CAP-05 — Order Fulfilment & Confirmation
 
-| Requirement ID | Requirement | Evidence of Satisfaction |
+| Requirement ID | Requirement | Evidence of satisfaction |
 |---|---|---|
-| **REQ-016** | A single checkout request does not produce duplicate durable orders. | Repeat of the same logical request does not produce additional orders. |
-| **REQ-017** | Owning customer should be able to read a successfully created order from the order history within the specified consistency window. | Created order is visible to the correctly authenticated customer. |
-| **REQ-018** | Order-created events and downstream processing should tolerate duplicates without producing duplicate downstream business effects.. | Redelivery of the event does not cause duplicate downstream processing actions. |
-| **REQ-019** | The order remains valid and accessible even if asynchronous confirmation notification fails or delayed. | Order remains valid and accessible even if notification processing failed or repeated. |
+| **REQ-016** | One successful logical checkout must create no more than one durable order. | Duplicate requests/retries do not produce duplicate orders. |
+| **REQ-017** | The owning customer can retrieve a successfully created order from order history within the defined consistency window. | Persisted order becomes visible to the correct authenticated customer. |
+| **REQ-018** | Order-created events and downstream consumers must tolerate duplicate delivery without producing duplicate business effects. | Repeated event delivery does not duplicate notifications or other protected downstream actions. |
+| **REQ-019** | Failure or delay of the asynchronous confirmation notification must not invalidate an otherwise successful order. | Order remains valid/retrievable even when notification processing is delayed or retried. |
 
-### Primary Risk Associations
+### Primary risk links
 
-- `RISK-012` - duplicate order creation
-- `RISK-013` - order is not visible to the owning customer
-- `RISK-014` - event duplicates are processed downstream and produce duplicate actions
-- `RISK-015` - delayed or failing notification process
+- `RISK-012` — duplicate order creation
+- `RISK-013` — stored order not visible to owning customer
+- `RISK-014` — duplicate event causes repeated downstream processing
+- `RISK-015` — delayed or missing confirmation notification
 
 ---
 
-## Cross-Capability Requirements
+## Cross-capability requirements
 
-Some of outcomes require coordination across several capabilities in order to keep consistency.
+Some outcomes require more than one capability to remain consistent.
 
 | Requirement ID | Cross-capability requirement | Capabilities |
 |---|---|---|
-| **REQ-020** | Accepted commercial state at checkout should be traceable to both the basket and order so unexpected price/quantity changes can be detected. | CAP-02, CAP-03, CAP-04, CAP-05 |
-| **REQ-021** | Single customer transaction should be traceable across checkout, payment, order persistence and asynchronous processing using stable correlation mechanism. | CAP-04, CAP-05 |
-| **REQ-022** | Session interruption during checkout should not allow unauthorized continuation or duplication of transaction if the customer retries. | CAP-01, CAP-04 |
+| **REQ-020** | The commercial state accepted at checkout must be traceable to the basket and order so that unexpected price/quantity changes are detectable. | CAP-02, CAP-03, CAP-04, CAP-05 |
+| **REQ-021** | One customer transaction must be traceable across checkout, payment, order persistence, and asynchronous processing using a stable correlation mechanism. | CAP-04, CAP-05 |
+| **REQ-022** | A session interruption during checkout must not allow an unauthorised continuation or cause an uncontrolled duplicate transaction when the customer retries safely. | CAP-01, CAP-04 |
 
-## Requirement Scope Notes
+## Requirement scope notes
 
-The requirements are intentionally implementation agnostic. For example, `REQ-014` requires idempotence, however does not define any particular implementation of idempotency key storage. `REQ-007` and `REQ-015` REQ-015 require agreed performance thresholds, however numeric thresholds are environment-specific and could evolve independently from business requirements.
+These requirements are deliberately implementation-neutral. For example, `REQ-014` requires idempotent behaviour but does not prescribe the exact idempotency-key storage mechanism. Similarly, `REQ-007` and `REQ-015` require agreed performance thresholds, but the numeric thresholds are release/environment criteria and can evolve independently of the business requirement.
 
-Detailed user interface layout, copy, visual design and provider internal behaviors are out of scope of this catalog unless they have material impact on any of defined business outcomes.
+Detailed UI layout, copy, visual design, and provider-internal behaviour are outside this catalogue unless they materially affect one of the defined business outcomes.

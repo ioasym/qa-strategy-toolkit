@@ -30,4 +30,4 @@ Fix the immediate defect.
 Improve architecture, tests, monitoring, review, or process so similar failures are less likely.
 
 ### Verification
-Define evidence that demonstrates the preventive action works.
+Define evidence that verifies the preventive action works.

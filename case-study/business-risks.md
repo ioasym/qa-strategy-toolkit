@@ -113,7 +113,7 @@ Controls
 - E2E: successful purchase and visible order confirmation
 ```
 
-This example illustrates the repository's central idea: **a high-risk business outcome should be protected by several complementary controls, not by one large end-to-end test.**
+RISK-008 is protected by several complementary controls because no single end-to-end test can cover the relevant failure modes with the same speed and diagnostic value.
 
 ## Cross-capability risks
 

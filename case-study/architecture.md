@@ -66,7 +66,7 @@ The architecture provides several useful test boundaries:
 - **Component/unit level:** pricing calculations, validation, state transitions, idempotency rules, and error mapping.
 - **API/service level:** authentication, catalogue, basket, checkout, order contracts, and authorization rules.
 - **Integration level:** order persistence, payment-provider responses, message publication/consumption, and reconciliation behaviour.
-- **UI end-to-end:** a deliberately small set of critical customer journeys that prove the browser experience across services.
+- **UI end-to-end:** a small set of critical customer journeys that verify the browser experience across services.
 - **Performance:** catalogue/search reads, basket operations, checkout, and order creation under representative load.
 - **Resilience:** provider timeout, dependency unavailability, retry, duplicate message, and eventual-consistency scenarios.
 - **Observability:** correlation IDs and evidence that allow one customer transaction to be followed across services.

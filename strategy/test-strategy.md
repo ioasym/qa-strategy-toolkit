@@ -89,14 +89,14 @@ The release-critical automated pack is derived from the requirement/risk traceab
 
 Product search remains strongly automated, but whether it is a release-blocking gate depends on the release/change scope. Performance and asynchronous-processing evidence are similarly conditional where the relevant components or capacity assumptions have changed.
 
-The blocking pack should remain small enough to be reliable and fast, while deeper component/API/integration suites provide broader evidence below the browser layer. See `../risk/risk-to-test-traceability.md`.
+The blocking pack should remain small enough to be reliable and fast, while deeper component/API/integration suites provide broader evidence below the browser layer. See `../risk/risk-to-test-traceability.md` and [`../decisions/ADR-001-ui-automation-scope.md`](../decisions/ADR-001-ui-automation-scope.md).
 
 ## 7. Test data
 
 - Prefer synthetic test users and products.
 - Generate unique order/customer identifiers per run.
 - Avoid shared mutable records across parallel tests.
-- Reset or recreate data through APIs where possible.
+- Reset or recreate data through APIs where possible; see [`../decisions/ADR-002-api-first-test-data.md`](../decisions/ADR-002-api-first-test-data.md).
 - Never commit secrets or production-like customer data.
 
 ## 8. Environments
@@ -125,7 +125,7 @@ Automated tests should be:
 - observable when they fail
 - fast enough for their pipeline stage
 
-Repeated flaky tests are treated as defects in the test system rather than accepted as normal noise.
+Repeated flaky tests are treated as defects in the test system rather than accepted as normal noise. The investigation, quarantine, retry, and restoration policy is documented in [`../decisions/ADR-003-flaky-test-policy.md`](../decisions/ADR-003-flaky-test-policy.md).
 
 ## 11. Exit decision
 
@@ -139,4 +139,4 @@ A release decision is supported by:
 - change-specific exploratory results
 - known limitations
 
-Testing informs the release decision; it does not replace business ownership of accepted risk.
+Testing informs the release decision; it does not replace business ownership of accepted risk. Blocking evidence is selected using the risk- and change-aware approach in [`../decisions/ADR-004-release-quality-gates.md`](../decisions/ADR-004-release-quality-gates.md).

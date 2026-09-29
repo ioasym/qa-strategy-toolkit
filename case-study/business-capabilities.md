@@ -1,6 +1,6 @@
 # ShopSphere — Business Capabilities
 
-This case study groups ShopSphere around five business capabilities. The capability model is intentionally small: it gives the test strategy a stable business view even when the underlying implementation changes.
+ShopSphere is grouped around five business capabilities. Keeping the model to five top-level capabilities gives the test strategy a stable business view even when the underlying implementation changes.
 
 ## Capability map
 
